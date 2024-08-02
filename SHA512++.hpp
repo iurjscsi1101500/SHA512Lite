@@ -26,7 +26,6 @@ THE SOFTWARE.
 #include <vector>
 #include <iomanip>
 #include <sstream>
-#include <cstring>
 typedef unsigned long long uint64;
 
 const uint64 K[80] = {
@@ -190,9 +189,9 @@ std::string sha512_to_string(const unsigned char hash[64]) {
     }
     return ss.str();
 }
-int compare_shaTOstr(const uint8_t hash[64], const char *input) {
+int compare_shaTOstr(const uint8_t hash[64], std::string input) {
     uint8_t hash2[64];
-    sha512(reinterpret_cast<const uint8_t*>(input), strlen(input), hash2);
+    sha512(reinterpret_cast<const uint8_t*>(input.c_str()), input.size(), hash2);
     return std::equal(hash, hash + 64, hash2) ? 0 : -1;
 }
 }
